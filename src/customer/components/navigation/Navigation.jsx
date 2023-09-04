@@ -5,6 +5,7 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@her
 import { navigation } from './navigationData'
 import { Avatar, Button, Menu, MenuItem } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
@@ -14,6 +15,7 @@ function classNames(...classes) {
 
 export default function Navigation() {
   const [open, setOpen] = useState(false)
+  const navigate=useNavigate()
 const [anchorEl,setAnchorEl]=useState(null)
 const [openAuthModel,setOpenAuthModel]=useState(false)
 const openUserMenu=Boolean(anchorEl)
@@ -33,6 +35,7 @@ const handleCloseUserMenu=(e)=>{
       }
 
 const handleCategoryClick=(category,section,item,close)=>{
+  navigate(`/${category.id}/${section.id}/${item.name}`)
   close()
 }
 
@@ -189,14 +192,14 @@ const handleCategoryClick=(category,section,item,close)=>{
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <Link to="/">
                   <span className="sr-only">Your Company</span>
                   <img
                     className="h-8 w-auto"
                     src="https://cdn3.iconfinder.com/data/icons/social-media-2068/64/_shopping-512.png"
                     alt=""
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -268,9 +271,13 @@ const handleCategoryClick=(category,section,item,close)=>{
                                           >
                                             {section.items.map((item) => (
                                               <li key={item.name} className="flex">
-                                                <a href={item.href} className="hover:text-gray-800">
+                                                <p
+                                                onClick={
+                                                  ()=>handleCategoryClick(category,section,item,window.close)
+                                                }
+                                                href={item.href} className="hover:text-gray-800">
                                                   {item.name}
-                                                </a>
+                                                </p>
                                               </li>
                                             ))}
                                           </ul>
@@ -322,8 +329,8 @@ cursor:'pointer'
              
              >
 <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
-<MenuItem onClick={handleCloseUserMenu}>My Orders</MenuItem>
-<MenuItem onClick={handleCloseUserMenu}>Logout</MenuItem>
+<MenuItem onClick={()=>navigate("/account/order")}>My Orders</MenuItem>
+<MenuItem >Logout</MenuItem>
              </Menu>
              </div>):(
 <Button onClick={handleOpen}
