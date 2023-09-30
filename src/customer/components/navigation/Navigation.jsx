@@ -6,6 +6,7 @@ import { navigation } from './navigationData'
 import { Avatar, Button, Menu, MenuItem } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
 import { Link, useNavigate } from 'react-router-dom'
+import AuthModal from '../../Auth/AuthModal'
 
 
 
@@ -308,7 +309,7 @@ const handleCategoryClick=(category,section,item,close)=>{
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-             {true?( <div> <Avatar 
+             {false?( <div> <Avatar 
              className='text-white'
              onClick={handleUserClick}
              aria-controls={open?'basic-menu':undefined}
@@ -366,6 +367,7 @@ className='text-sm font-medium text-gray-700 hover:text-gray-800'
           </div>
         </nav>
       </header>
+      <AuthModal handleClose={handleClose} open={openAuthModel} />
     </div>
   )
 }
